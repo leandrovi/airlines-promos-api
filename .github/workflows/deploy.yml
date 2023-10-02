@@ -30,10 +30,14 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: 18
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
       - name: Install Dependencies
-        run: npm ci
+        run: pnpm ci
       - name: Run Database Push
-        run: npm run db:push
+        run: pnpm run db:push
       - name: Run Tests
         run: npx jest
 
@@ -58,9 +62,9 @@ jobs:
         env:
           DOPPLER_TOKEN: ${{ secrets.DOPPLER_TOKEN }}
       - name: Install Dependencies
-        run: npm ci
+        run: pnpm install
       - name: Run Production Migrations
-        run: npm run migrate:deploy
+        run: pnpm run migrate:deploy
         env:
           DOPPLER_TOKEN: ${{ secrets.DOPPLER_TOKEN }}
       - name: Setup fly.io
