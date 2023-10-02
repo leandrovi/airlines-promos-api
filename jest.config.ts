@@ -1,4 +1,3 @@
-const { pathsToModuleNameMapper } = require("ts-jest/utils");
 const { compilerOptions } = require("./tsconfig");
 
 module.exports = {
@@ -7,5 +6,4 @@ module.exports = {
 
   // this enables us to use tsconfig-paths with jest
   modulePaths: [compilerOptions.baseUrl],
-  moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths),
 };
