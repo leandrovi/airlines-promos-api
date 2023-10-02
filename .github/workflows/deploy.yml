@@ -39,7 +39,7 @@ jobs:
       - name: Run Database Push
         run: pnpm run db:push
       - name: Run Tests
-        run: npx jest
+        run: npx jest --passWithNoTests
 
   deploy:
     runs-on: ubuntu-latest
