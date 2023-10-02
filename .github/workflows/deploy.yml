@@ -47,6 +47,10 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: 18
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
       - name: Install Doppler CLI
         uses: dopplerhq/cli-action@v2
       - name: Test Doppler CLI
