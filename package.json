@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "doppler run -- ts-node-dev -r tsconfig-paths/register ./src/index.ts",
     "start": "doppler run -- node ./dist/index.js",
-    "build": "doppler run -- npx prisma generate && npx tsc",
+    "build": "npx prisma generate && npx tsc",
     "migrate:dev": "doppler run -- npx prisma migrate dev",
     "migrate:deploy": "doppler run -- npx prisma migrate deploy",
     "db:pull": "npx prisma db pull",
