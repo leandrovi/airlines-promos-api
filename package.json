@@ -2,7 +2,6 @@
   "name": "airlines-promos-api",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/index.js",
   "scripts": {
     "dev": "doppler run -- ts-node-dev --respawn --transpile-only src/index.ts",
     "start": "node dist/index.js",

@@ -1,5 +1,5 @@
 import request from "supertest";
-import { app } from "../../index";
+import { app } from "../../app";
 
 describe("GET /health", () => {
   it("should respond with json containing airlines promos message", async () => {
