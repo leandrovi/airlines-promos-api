@@ -3,6 +3,7 @@ import { Prisma, TweetContent, TweetResult } from "@prisma/client";
 
 import { Metaphor } from "../../lib/metaphor";
 import { getPrisma } from "../../lib/prisma";
+import { generateExtractContent } from "../../lib/openai";
 import { normalizeExtract } from "../../utils/normalizeExtract";
 
 interface FinalResult extends Omit<TweetResult, "createdAt"> {
@@ -55,6 +56,7 @@ export async function getLastDayPromotions() {
       numResults: 10,
       includeDomains: ["twitter.com"],
       startPublishedDate: format(startDate, "yyyy-MM-dd"),
+      endPublishedDate: format(startDate, "yyyy-MM-dd"),
     });
 
     const filteredResults = searchResponse.results.filter(
@@ -67,9 +69,16 @@ export async function getLastDayPromotions() {
 
     const finalResults: FinalResult[] = [];
 
-    filteredResults.forEach((result) => {
+    for (let result of filteredResults) {
       const content = contents.find((content) => content.url === result.url);
-      if (!content) return;
+
+      if (!content) continue;
+
+      const extractNormalized = normalizeExtract(content.extract);
+      const { title, summary } = await generateExtractContent(
+        extractNormalized
+      );
+
       finalResults.push({
         id: result.id,
         url: result.url,
@@ -78,12 +87,12 @@ export async function getLastDayPromotions() {
         score: new Prisma.Decimal(result.score),
         tweetContent: {
           id: content.id,
-          title: content.title,
-          extract: normalizeExtract(content.extract),
+          title,
+          extract: summary,
           tweetResultId: result.id,
         },
       });
-    });
+    }
 
     await prisma.$transaction(async (tx) => {
       await tx.tweetResult.createMany({
