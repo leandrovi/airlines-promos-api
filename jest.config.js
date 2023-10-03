@@ -5,6 +5,4 @@ module.exports = {
   moduleNameMapper: {
     "^@/(.*)$": "<rootDir>/src/$1",
   },
-  collectCoverage: true,
-  collectCoverageFrom: ["src/index.ts"],
 };
