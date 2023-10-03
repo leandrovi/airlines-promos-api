@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import { healthRouter, promotionsRouter } from "./routes";
 
-const app = express();
+export const app = express();
 const port = process.env.PORT || 3333;
 
 app.use(cors());
